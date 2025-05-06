@@ -1,52 +1,95 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+
+import './App.css';
 
 function App() {
   const [codigo, setCodigo] = useState('');
   const [salida, setSalida] = useState([]);
 
   const ejecutar = async () => {
-    const res = await fetch('http://localhost:5000/analizar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ codigo }),
-    });
-    const data = await res.json();
-    setSalida(data);
+    try {
+      const res = await fetch('http://localhost:5000/analizar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ codigo }),
+      });
+      const data = await res.json();
+      setSalida(data);
+    } catch {
+      setSalida([{ type: 'Error', value: 'Servidor no disponible', line: '-' }]);
+    }
   };
 
+  const lineas = codigo.split('\n').map((_, i) => i + 1);
+
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Mi Compilador</h1>
-      <textarea
-        rows={10}
-        cols={70}
-        value={codigo}
-        onChange={e => setCodigo(e.target.value)}
-        placeholder="Escribe tu código aquí…"
-        style={{ fontFamily: 'monospace', fontSize: '1rem' }}
-      />
-      <br />
-      <button onClick={ejecutar} style={{ marginTop: '1rem' }}>
-        Ejecutar
-      </button>
-      <pre
-        style={{
-          background: '#f5f5f5',
-          padding: '1rem',
-          marginTop: '1rem',
-          height: '200px',
-          overflow: 'auto',
-        }}
-      >
-        {salida.map((tok, i) => (
-          <div key={i}>
-            {tok.type} → {String(tok.value)} (Línea {tok.line})
-          </div>
-        ))}
-      </pre>
+    <div className="app-container">
+      <div className="toolbar">
+        <button
+          className="tool-btn"
+          onClick={() => {
+            setCodigo("");
+            setSalida([]);
+          }}
+        >
+          <img src="/icons/nuevo.png" alt="Nuevo" className="btn-icon" />
+          <span>Nuevo</span>
+        </button>
+        <button className="tool-btn">
+          <img src="/icons/guardar.png" alt="Guardar" className="btn-icon" />
+          <span>Guardar</span>
+        </button>
+        <button className="tool-btn">
+          <img src="/icons/abrir.png" alt="Abrir" className="btn-icon" />
+          <span>Abrir</span>
+        </button>
+        <button className="tool-btn" onClick={ejecutar}>
+          <img src="/icons/compilar.png" alt="Compilar" className="btn-icon" />
+          <span>Compilar</span>
+        </button>
+        <button className="tool-btn">
+          <img src="/icons/tokens.png" alt="Tokens" className="btn-icon" />
+          <span>Tokens</span>
+        </button>
+        <button className="tool-btn">
+          <img src="/icons/ident.png" alt="Ident" className="btn-icon" />
+          <span>Ident</span>
+        </button>
+        <button className="tool-btn">
+          <img src="/icons/reservadas.png" alt="Reservadas" className="btn-icon" />
+          <span>Reservadas</span>
+        </button>
+      </div>
+
+      <div className="editor-container">
+        <div className="line-numbers">
+          {lineas.map((num) => (
+            <div key={num} className="line-number">
+              {num}
+            </div>
+          ))}
+        </div>
+        <textarea
+          className="code-editor"
+          wrap="off"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+          placeholder="Escribe tu código aquí…"
+        />
+      </div>
+
+      <div className="output-container">
+        <textarea
+          className="output-console"
+          wrap="off"
+          value={salida
+            .map((tok) => `${tok.type} → ${tok.value} (Línea ${tok.line})`)
+            .join("\n")}
+          readOnly
+        />
+      </div>
     </div>
   );
 }
 
 export default App;
-

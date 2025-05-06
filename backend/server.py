@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from lexer import lexer  # tu lexer.py
+from lexer import lexer  
 
 app = Flask(__name__)
 CORS(app)
@@ -8,6 +8,8 @@ CORS(app)
 @app.route('/analizar', methods=['POST'])
 def analizar():
     codigo = request.json.get('codigo', '')
+    lexer.lineno = 1
+
     lexer.input(codigo)
     tokens = []
     while True:
