@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from lexer import lexer  
+from lexer import lexer, lexer_errors
 
 app = Flask(__name__)
 CORS(app)
@@ -8,8 +8,12 @@ CORS(app)
 @app.route('/analizar', methods=['POST'])
 def analizar():
     codigo = request.json.get('codigo', '')
-    lexer.lineno = 1
 
+    # Reiniciar contador y errores
+    lexer.lineno = 1
+    lexer_errors.clear()
+
+    # Tokenizar
     lexer.input(codigo)
     tokens = []
     while True:
@@ -22,8 +26,12 @@ def analizar():
             'line': tok.lineno,
             'pos': tok.lexpos
         })
-    return jsonify(tokens)
+
+    # Devolver tokens y errores
+    return jsonify({
+        'tokens': tokens,
+        'errors': lexer_errors
+    })
 
 if __name__ == '__main__':
-    # ejecuta en localhost:5000
     app.run(port=5000, debug=True)

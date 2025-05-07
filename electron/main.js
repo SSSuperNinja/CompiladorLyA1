@@ -5,16 +5,25 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 900,
     height: 700,
+    backgroundColor: '#2e2e2e',
+    show: false,            // la ocultamos hasta que esté lista
     webPreferences: {
-      nodeIntegration: true, // para fetch ok
-      contextIsolation: false
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   });
-  // en desarrollo:
-  win.loadURL('http://localhost:5173');  
-  // para producción, tras build: 
-  // win.loadFile(path.join(__dirname, '../frontend/dist/index.html'));
+
+  // Ajusta aquí la URL correcta
+  win.loadURL('http://localhost:5173');  // o 'http://localhost:3000' para CRA
+
+  // Solo mostrar cuando React haya cargado
+  win.once('ready-to-show', () => {
+    win.show();
+    // Para ver la consola de Chromium
+     win.webContents.openDevTools();
+  });
 }
 
 app.whenReady().then(createWindow);
+
 app.on('window-all-closed', () => app.quit());

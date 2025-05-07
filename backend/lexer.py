@@ -1,4 +1,6 @@
 import ply.lex as lex
+#Acumulacion de los errores lexicos 
+lexer_errors = []
 
 # Palabras reservadas
 reserved = {
@@ -137,10 +139,16 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-# Error
+
 def t_error(t):
-    print(f"Carácter ilegal '{t.value[0]}' en línea {t.lexer.lineno}")
+    # En lugar de print guardamos el error en la lista
+    lexer_errors.append({
+        'char': t.value[0],
+        'line': t.lexer.lineno,
+        'pos': t.lexpos,
+        'msg': f"Carácter ilegal '{t.value[0]}'"
+    })
     t.lexer.skip(1)
 
-# Construcción del lexer
+
 lexer = lex.lex()

@@ -7,6 +7,7 @@ function App() {
   const [salida, setSalida] = useState([]);
   const lineRef = useRef(null);
   const textRef = useRef(null);
+  const [errores, setErrores] = useState([]); 
 
   const ejecutar = async () => {
     try {
@@ -15,10 +16,12 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ codigo }),
       });
-      const data = await res.json();
-      setSalida(data);
+      const { tokens, errors } = await res.json();
+      setSalida(tokens);
+      setErrores(errors || []);   // ← Usa setErrores aquí
     } catch {
-      setSalida([{ type: 'Error', value: 'Servidor no disponible', line: '-' }]);
+      setSalida([]);
+      setErrores([{ char: '', line: '-', pos: '-', msg: 'Servidor no disponible' }]);
     }
   };
 
@@ -86,16 +89,17 @@ function App() {
   />
 </div>
 
-      <div className="output-container">
-        <textarea
-          className="output-console"
-          wrap="off"
-          value={salida
-            .map((tok) => `${tok.type} → ${tok.value} (Línea ${tok.line})`)
-            .join("\n")}
-          readOnly
-        />
-      </div>
+  <div className="output-container">
+  <textarea
+  className="output-console"
+  wrap="off"
+  value={[
+    ...salida.map(tok => `${tok.type} → ${tok.value} (Línea ${tok.line})`),
+    ...errores.map(err => `ERROR [L${err.line},col ${err.pos}]: ${err.msg}`)
+  ].join('\n')}
+  readOnly
+/>
+  </div>
     </div>
   );
 }
