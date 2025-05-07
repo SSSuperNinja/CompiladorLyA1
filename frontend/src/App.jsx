@@ -16,9 +16,9 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ codigo }),
       });
-      const { tokens, errors } = await res.json();
-      setSalida(tokens);
-      setErrores(errors || []);   // ← Usa setErrores aquí
+      const data = await res.json();
+      setSalida(data.tokens || []);
+      setErrores(data.errores || []);
     } catch {
       setSalida([]);
       setErrores([{ char: '', line: '-', pos: '-', msg: 'Servidor no disponible' }]);
@@ -89,17 +89,19 @@ function App() {
   />
 </div>
 
-  <div className="output-container">
+<div className="output-container">
   <textarea
-  className="output-console"
-  wrap="off"
-  value={[
-    ...salida.map(tok => `${tok.type} → ${tok.value} (Línea ${tok.line})`),
-    ...errores.map(err => `ERROR [L${err.line},col ${err.pos}]: ${err.msg}`)
-  ].join('\n')}
-  readOnly
-/>
-  </div>
+    className="output-console"
+    readOnly
+    value={
+      salida.map(
+        (tok) =>
+          `${tok.type} → ${tok.value} (Línea ${tok.line}, Col ${tok.col})`
+      ).join('\n') +
+      (errores.length > 0 ? '\n' + errores.join('\n') : '')
+    }
+  />
+</div>
     </div>
   );
 }
