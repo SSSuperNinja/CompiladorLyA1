@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 
 import './App.css';
 
 function App() {
   const [codigo, setCodigo] = useState('');
   const [salida, setSalida] = useState([]);
+  const lineRef = useRef(null);
+  const textRef = useRef(null);
 
   const ejecutar = async () => {
     try {
@@ -17,6 +19,12 @@ function App() {
       setSalida(data);
     } catch {
       setSalida([{ type: 'Error', value: 'Servidor no disponible', line: '-' }]);
+    }
+  };
+
+  const syncScroll = () => {
+    if (lineRef.current && textRef.current) {
+      lineRef.current.scrollTop = textRef.current.scrollTop;
     }
   };
 
@@ -61,22 +69,22 @@ function App() {
         </button>
       </div>
 
-      <div className="editor-container">
-        <div className="line-numbers">
-          {lineas.map((num) => (
-            <div key={num} className="line-number">
-              {num}
-            </div>
-          ))}
-        </div>
-        <textarea
-          className="code-editor"
-          wrap="off"
-          value={codigo}
-          onChange={(e) => setCodigo(e.target.value)}
-          placeholder="Escribe tu código aquí…"
-        />
-      </div>
+      <div className="editor-wrapper">
+  <div className="line-numbers" ref={lineRef}>
+    {codigo.split('\n').map((_, i) => (
+      <div className="line-number" key={i}>{i + 1}</div>
+    ))}
+  </div>
+
+  <textarea
+    ref={textRef}
+    className="code-editor"
+    value={codigo}
+    onChange={e => setCodigo(e.target.value)}
+    onScroll={syncScroll}
+    wrap="off"
+  />
+</div>
 
       <div className="output-container">
         <textarea

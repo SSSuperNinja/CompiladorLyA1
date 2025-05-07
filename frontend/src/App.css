@@ -1,4 +1,4 @@
-/* 1) Reset y aseguramos que html/body full height y full width */
+/* Reset y full width/height */
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -10,22 +10,18 @@ html, body, #root {
 body {
   font-family: sans-serif;
   background-color: #2e2e2e;
-  /* Importante: no ocultar overflow */
-  /* overflow: hidden;  <-- QUITADO */
 }
 
-/* 2) Contenedor principal ocupa TODO el viewport */
+/* Contenedor principal */
 .app-container {
   display: flex;
   flex-direction: column;
-  /* Full viewport */
   width: 100vw;
   height: 100vh;
-  /* Padding opcional, pero si lo quieres sin recortes */
-  padding: 0;  
+  padding: 0;
 }
 
-/* 3) Toolbar fija en su alto */
+/* Toolbar */
 .toolbar {
   flex: 0 0 auto;
   display: flex;
@@ -33,11 +29,16 @@ body {
   background-color: #87a7bd;
   padding: 10px;
   gap: 20px;
-
+  justify-content: left;
 }
 
-/* Botones */
+/* Botones con imagen arriba y texto abajo */
 .tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   background-color: white;
   border: 1px solid #ccc;
   padding: 8px 12px;
@@ -45,32 +46,51 @@ body {
   font-weight: bold;
   border-radius: 4px;
   transition: background-color 0.2s ease;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
   font-size: 10px;
 }
+
 .tool-btn:hover {
   background-color: #f0f0f0;
 }
 
-/* 4) Editor y consola reparten TODO el espacio restante */
+.btn-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.btn-label {
+  font-size: 12px;
+  text-align: center;
+  color: #333;
+}
+
+/* Editor ocupa más espacio vertical */
 .editor-container {
-  flex: 2 1 0;           /* más espacio vertical para el editor */
-  display: flex;
+  flex: 3 1 0;
   background-color: #fff;
-  overflow: hidden;      /* scroll interno */
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
 }
 
-.output-container {
-  flex: 1 1 0;           /* menos espacio pero rellena */
+/* Wrapper interno: números + editor */
+.editor-wrapper {
   display: flex;
-  background-color: #fff;
+  flex: 1;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
-/* Columna de números */
+/* Barra de números de línea */
 .line-numbers {
   background-color: #e0e0e0;
   padding: 10px 5px;
-  width: 20px;
+  width: 30px;
   text-align: right;
   font-family: monospace;
   font-size: 14px;
@@ -82,10 +102,36 @@ body {
 .line-number {
   height: 20px;
   line-height: 20px;
+  white-space: nowrap;
 }
 
-/* Textareas sin wrap, con scroll automático */
-.code-editor,
+/* Editor de texto */
+.code-editor {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Consola de salida */
+.output-container {
+  height: 230px;
+  display: flex;
+  flex: 0 0 auto;
+  background-color: #fff;
+  overflow: hidden;
+}
+
 .output-console {
   flex: 1;
   border: none;
@@ -98,50 +144,9 @@ body {
   white-space: pre;
   overflow-x: auto;
   overflow-y: auto;
-}
-
-/* Asegura que el textarea llene su contenedor */
-.code-editor,
-.output-console {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-}
-
-.output-console {
   background-color: rgb(255, 255, 255);
   border-top: 10px solid #87a7bd;
-}
-.tool-btn {
-  display: flex;               /* flex container */
-  flex-direction: column;      /* icono arriba, label abajo */
-  align-items: center;         /* centrar horizontalmente */
-  justify-content: center;     /* centrar verticalmente (dentro del botón) */
-  gap: 4px;                    /* espacio entre icono y texto */
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-  width: 60px;                 /* ancho fijo si quieres botones homogéneos */
-  height: 60px;                /* alto fijo para cuadrado perfecto */
-  box-sizing: border-box;
-}
-
-.tool-btn:hover {
-  background-color: #f0f0f0;
-}
-
-.btn-icon {
-  width: 30px;     /* tamaño del icono */
-  height: 30px;
-  object-fit: contain;
-}
-
-.btn-label {
-  font-size: 12px; /* tamaño de texto más pequeño */
-  text-align: center;
-  color: #333;
 }
