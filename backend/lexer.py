@@ -56,6 +56,15 @@ tokens = [
     'LBRACKET', 'RBRACKET', 'SEMI', 'COMMA', 'COLON', 'DOT'
 ] + list(reserved.values())
 
+def t_INVALID_OP(t):
+    r'=>|=<'
+    line = calcular_linea(t.lexer.lexdata, t.lexpos)
+    col  = calcular_columna(t.lexer.lexdata, t.lexpos)
+    msg  = f"Operador inválido '{t.value}'"
+    lexer_errors.append(f"ERROR [line {line},col {col}]: {msg}")
+    t.lexer.skip(len(t.value))
+
+    
 # Reglas simples
 t_PLUS = r'\+'
 t_MINUS = r'-'
@@ -68,10 +77,10 @@ t_AND = r'&'
 t_OR = r'\|'
 t_NOT = r'!'
 
+t_GE = r'>='
+t_LE = r'<='
 t_EQ = r'=='
 t_NE = r'!='
-t_LE = r'<='
-t_GE = r'>='
 t_LT = r'<'
 t_GT = r'>'
 
@@ -92,6 +101,10 @@ t_DOT = r'\.'
 
 # Errores guardados aquí
 lexer_errors = []
+
+def reset_lexer():
+    global lexer_errors
+    lexer_errors.clear()
 
 def t_REAL(t):
     r'\d+\.\d+'
@@ -136,12 +149,20 @@ def calcular_columna(texto, lexpos):
         return lexpos + 1
     return lexpos - ultima_nueva_linea
 
+def calcular_linea(texto, lexpos):
+    # Cuenta cuántos '\n' hay desde el inicio hasta lexpos, y suma 1.
+    return texto.count('\n', 0, lexpos) + 1
+
+    
 # Manejo de errores
 def t_error(t):
     col = calcular_columna(t.lexer.lexdata, t.lexpos)
-    error_msg = f"ERROR [line {t.lineno},col {col}]: Carácter ilegal '{t.value[0]}'"
-    lexer_errors.append(error_msg)
+    lexer_errors.append(
+        f"ERROR [line {t.lexer.lineno},col {col}]: Carácter ilegal '{t.value[0]}'"
+    )
     t.lexer.skip(1)
+# Justo antes de las definiciones de t_ASSIGN, t_GT, etc:
+
 
 # Construcción
 lexer = lex.lex()

@@ -1,0 +1,778 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    CADENA
+    CARACTER
+    COLA
+    COLON
+    CONFIGURAR
+    CONFIGURAR_PIN
+    DIVIDE
+    DOT
+    EN
+    ENTERO
+    EQ
+    ESCRIBIR_DIGITAL
+    FALSE
+    GE
+    GT
+    HACER
+    IMPRIMIR
+    INFINITA
+    LBRACKET
+    LE
+    LEER_ANALOGICO
+    LEER_DIGITAL
+    LEER_TEXTO
+    LIBRERIA
+    LISTA
+    LLAMAR
+    LT
+    MIENTRAS
+    MINUS
+    MINUS_ASSIGN
+    MOD
+    NE
+    NOT
+    OR
+    PARA
+    PILA
+    PIN_ANALOGICO
+    PIN_DIGITAL
+    PLUS
+    PLUS_ASSIGN
+    POW
+    RBRACKET
+    REAL
+    SI
+    SINO
+    TIMES
+    TIPO_BOOLEAN
+    TIPO_CHAR
+    TIPO_DOUBLE
+    TIPO_INT
+    TIPO_STRING
+    TRUE
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> declaraciones
+Rule 2     declaraciones -> declaracion declaraciones
+Rule 3     declaraciones -> empty
+Rule 4     declaracion -> decl_componente
+Rule 5     declaracion -> decl_funcion
+Rule 6     declaracion -> stmt_simple
+Rule 7     tipo -> ID
+Rule 8     tipo -> LED
+Rule 9     tipo -> SENSOR
+Rule 10    tipo -> TERMOMETRO
+Rule 11    tipo -> SERVOMOTOR
+Rule 12    tipo -> VENTILADOR
+Rule 13    tipo -> MICROPROCESADOR
+Rule 14    tipo -> DISPLAY
+Rule 15    tipo -> BOTON
+Rule 16    decl_componente -> COMPONENTE ID ASSIGN tipo SEMI
+Rule 17    decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE
+Rule 18    lista_ids -> ID coma_ids
+Rule 19    lista_ids -> empty
+Rule 20    coma_ids -> COMMA ID coma_ids
+Rule 21    coma_ids -> empty
+Rule 22    stmt_simple -> ENCENDER ID SEMI
+Rule 23    stmt_simple -> APAGAR ID SEMI
+Rule 24    stmt_simple -> LEER ID SEMI
+Rule 25    stmt_simple -> GIRAR ID ID SEMI
+Rule 26    stmt_simple -> ID LPAREN lista_ids RPAREN SEMI
+Rule 27    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 
+APAGAR               : 23
+ASSIGN               : 16
+BOTON                : 15
+CADENA               : 
+CARACTER             : 
+COLA                 : 
+COLON                : 
+COMMA                : 20
+COMPONENTE           : 16
+CONFIGURAR           : 
+CONFIGURAR_PIN       : 
+DISPLAY              : 14
+DIVIDE               : 
+DOT                  : 
+EN                   : 
+ENCENDER             : 22
+ENTERO               : 
+EQ                   : 
+ESCRIBIR_DIGITAL     : 
+FALSE                : 
+FUNCION              : 17
+GE                   : 
+GIRAR                : 25
+GT                   : 
+HACER                : 
+ID                   : 7 16 17 18 20 22 23 24 25 25 26
+IMPRIMIR             : 
+INFINITA             : 
+LBRACE               : 17
+LBRACKET             : 
+LE                   : 
+LED                  : 8
+LEER                 : 24
+LEER_ANALOGICO       : 
+LEER_DIGITAL         : 
+LEER_TEXTO           : 
+LIBRERIA             : 
+LISTA                : 
+LLAMAR               : 
+LPAREN               : 17 26
+LT                   : 
+MICROPROCESADOR      : 13
+MIENTRAS             : 
+MINUS                : 
+MINUS_ASSIGN         : 
+MOD                  : 
+NE                   : 
+NOT                  : 
+OR                   : 
+PARA                 : 
+PILA                 : 
+PIN_ANALOGICO        : 
+PIN_DIGITAL          : 
+PLUS                 : 
+PLUS_ASSIGN          : 
+POW                  : 
+RBRACE               : 17
+RBRACKET             : 
+REAL                 : 
+RPAREN               : 17 26
+SEMI                 : 16 22 23 24 25 26
+SENSOR               : 9
+SERVOMOTOR           : 11
+SI                   : 
+SINO                 : 
+TERMOMETRO           : 10
+TIMES                : 
+TIPO_BOOLEAN         : 
+TIPO_CHAR            : 
+TIPO_DOUBLE          : 
+TIPO_INT             : 
+TIPO_STRING          : 
+TRUE                 : 
+VENTILADOR           : 12
+error                : 
+
+Nonterminals, with rules where they appear
+
+coma_ids             : 18 20
+decl_componente      : 4
+decl_funcion         : 5
+declaracion          : 2
+declaraciones        : 1 2 17
+empty                : 3 19 21
+lista_ids            : 17 26
+programa             : 0
+stmt_simple          : 6
+tipo                 : 16
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . declaraciones
+    (2) declaraciones -> . declaracion declaraciones
+    (3) declaraciones -> . empty
+    (4) declaracion -> . decl_componente
+    (5) declaracion -> . decl_funcion
+    (6) declaracion -> . stmt_simple
+    (27) empty -> .
+    (16) decl_componente -> . COMPONENTE ID ASSIGN tipo SEMI
+    (17) decl_funcion -> . FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE
+    (22) stmt_simple -> . ENCENDER ID SEMI
+    (23) stmt_simple -> . APAGAR ID SEMI
+    (24) stmt_simple -> . LEER ID SEMI
+    (25) stmt_simple -> . GIRAR ID ID SEMI
+    (26) stmt_simple -> . ID LPAREN lista_ids RPAREN SEMI
+
+    $end            reduce using rule 27 (empty -> .)
+    COMPONENTE      shift and go to state 8
+    FUNCION         shift and go to state 10
+    ENCENDER        shift and go to state 11
+    APAGAR          shift and go to state 12
+    LEER            shift and go to state 13
+    GIRAR           shift and go to state 14
+    ID              shift and go to state 9
+
+    programa                       shift and go to state 1
+    declaraciones                  shift and go to state 2
+    declaracion                    shift and go to state 3
+    empty                          shift and go to state 4
+    decl_componente                shift and go to state 5
+    decl_funcion                   shift and go to state 6
+    stmt_simple                    shift and go to state 7
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> declaraciones .
+
+    $end            reduce using rule 1 (programa -> declaraciones .)
+
+
+state 3
+
+    (2) declaraciones -> declaracion . declaraciones
+    (2) declaraciones -> . declaracion declaraciones
+    (3) declaraciones -> . empty
+    (4) declaracion -> . decl_componente
+    (5) declaracion -> . decl_funcion
+    (6) declaracion -> . stmt_simple
+    (27) empty -> .
+    (16) decl_componente -> . COMPONENTE ID ASSIGN tipo SEMI
+    (17) decl_funcion -> . FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE
+    (22) stmt_simple -> . ENCENDER ID SEMI
+    (23) stmt_simple -> . APAGAR ID SEMI
+    (24) stmt_simple -> . LEER ID SEMI
+    (25) stmt_simple -> . GIRAR ID ID SEMI
+    (26) stmt_simple -> . ID LPAREN lista_ids RPAREN SEMI
+
+    $end            reduce using rule 27 (empty -> .)
+    RBRACE          reduce using rule 27 (empty -> .)
+    COMPONENTE      shift and go to state 8
+    FUNCION         shift and go to state 10
+    ENCENDER        shift and go to state 11
+    APAGAR          shift and go to state 12
+    LEER            shift and go to state 13
+    GIRAR           shift and go to state 14
+    ID              shift and go to state 9
+
+    declaracion                    shift and go to state 3
+    declaraciones                  shift and go to state 15
+    empty                          shift and go to state 4
+    decl_componente                shift and go to state 5
+    decl_funcion                   shift and go to state 6
+    stmt_simple                    shift and go to state 7
+
+state 4
+
+    (3) declaraciones -> empty .
+
+    $end            reduce using rule 3 (declaraciones -> empty .)
+    RBRACE          reduce using rule 3 (declaraciones -> empty .)
+
+
+state 5
+
+    (4) declaracion -> decl_componente .
+
+    COMPONENTE      reduce using rule 4 (declaracion -> decl_componente .)
+    FUNCION         reduce using rule 4 (declaracion -> decl_componente .)
+    ENCENDER        reduce using rule 4 (declaracion -> decl_componente .)
+    APAGAR          reduce using rule 4 (declaracion -> decl_componente .)
+    LEER            reduce using rule 4 (declaracion -> decl_componente .)
+    GIRAR           reduce using rule 4 (declaracion -> decl_componente .)
+    ID              reduce using rule 4 (declaracion -> decl_componente .)
+    $end            reduce using rule 4 (declaracion -> decl_componente .)
+    RBRACE          reduce using rule 4 (declaracion -> decl_componente .)
+
+
+state 6
+
+    (5) declaracion -> decl_funcion .
+
+    COMPONENTE      reduce using rule 5 (declaracion -> decl_funcion .)
+    FUNCION         reduce using rule 5 (declaracion -> decl_funcion .)
+    ENCENDER        reduce using rule 5 (declaracion -> decl_funcion .)
+    APAGAR          reduce using rule 5 (declaracion -> decl_funcion .)
+    LEER            reduce using rule 5 (declaracion -> decl_funcion .)
+    GIRAR           reduce using rule 5 (declaracion -> decl_funcion .)
+    ID              reduce using rule 5 (declaracion -> decl_funcion .)
+    $end            reduce using rule 5 (declaracion -> decl_funcion .)
+    RBRACE          reduce using rule 5 (declaracion -> decl_funcion .)
+
+
+state 7
+
+    (6) declaracion -> stmt_simple .
+
+    COMPONENTE      reduce using rule 6 (declaracion -> stmt_simple .)
+    FUNCION         reduce using rule 6 (declaracion -> stmt_simple .)
+    ENCENDER        reduce using rule 6 (declaracion -> stmt_simple .)
+    APAGAR          reduce using rule 6 (declaracion -> stmt_simple .)
+    LEER            reduce using rule 6 (declaracion -> stmt_simple .)
+    GIRAR           reduce using rule 6 (declaracion -> stmt_simple .)
+    ID              reduce using rule 6 (declaracion -> stmt_simple .)
+    $end            reduce using rule 6 (declaracion -> stmt_simple .)
+    RBRACE          reduce using rule 6 (declaracion -> stmt_simple .)
+
+
+state 8
+
+    (16) decl_componente -> COMPONENTE . ID ASSIGN tipo SEMI
+
+    ID              shift and go to state 16
+
+
+state 9
+
+    (26) stmt_simple -> ID . LPAREN lista_ids RPAREN SEMI
+
+    LPAREN          shift and go to state 17
+
+
+state 10
+
+    (17) decl_funcion -> FUNCION . ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE
+
+    ID              shift and go to state 18
+
+
+state 11
+
+    (22) stmt_simple -> ENCENDER . ID SEMI
+
+    ID              shift and go to state 19
+
+
+state 12
+
+    (23) stmt_simple -> APAGAR . ID SEMI
+
+    ID              shift and go to state 20
+
+
+state 13
+
+    (24) stmt_simple -> LEER . ID SEMI
+
+    ID              shift and go to state 21
+
+
+state 14
+
+    (25) stmt_simple -> GIRAR . ID ID SEMI
+
+    ID              shift and go to state 22
+
+
+state 15
+
+    (2) declaraciones -> declaracion declaraciones .
+
+    $end            reduce using rule 2 (declaraciones -> declaracion declaraciones .)
+    RBRACE          reduce using rule 2 (declaraciones -> declaracion declaraciones .)
+
+
+state 16
+
+    (16) decl_componente -> COMPONENTE ID . ASSIGN tipo SEMI
+
+    ASSIGN          shift and go to state 23
+
+
+state 17
+
+    (26) stmt_simple -> ID LPAREN . lista_ids RPAREN SEMI
+    (18) lista_ids -> . ID coma_ids
+    (19) lista_ids -> . empty
+    (27) empty -> .
+
+    ID              shift and go to state 24
+    RPAREN          reduce using rule 27 (empty -> .)
+
+    lista_ids                      shift and go to state 25
+    empty                          shift and go to state 26
+
+state 18
+
+    (17) decl_funcion -> FUNCION ID . LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE
+
+    LPAREN          shift and go to state 27
+
+
+state 19
+
+    (22) stmt_simple -> ENCENDER ID . SEMI
+
+    SEMI            shift and go to state 28
+
+
+state 20
+
+    (23) stmt_simple -> APAGAR ID . SEMI
+
+    SEMI            shift and go to state 29
+
+
+state 21
+
+    (24) stmt_simple -> LEER ID . SEMI
+
+    SEMI            shift and go to state 30
+
+
+state 22
+
+    (25) stmt_simple -> GIRAR ID . ID SEMI
+
+    ID              shift and go to state 31
+
+
+state 23
+
+    (16) decl_componente -> COMPONENTE ID ASSIGN . tipo SEMI
+    (7) tipo -> . ID
+    (8) tipo -> . LED
+    (9) tipo -> . SENSOR
+    (10) tipo -> . TERMOMETRO
+    (11) tipo -> . SERVOMOTOR
+    (12) tipo -> . VENTILADOR
+    (13) tipo -> . MICROPROCESADOR
+    (14) tipo -> . DISPLAY
+    (15) tipo -> . BOTON
+
+    ID              shift and go to state 32
+    LED             shift and go to state 34
+    SENSOR          shift and go to state 35
+    TERMOMETRO      shift and go to state 36
+    SERVOMOTOR      shift and go to state 37
+    VENTILADOR      shift and go to state 38
+    MICROPROCESADOR shift and go to state 39
+    DISPLAY         shift and go to state 40
+    BOTON           shift and go to state 41
+
+    tipo                           shift and go to state 33
+
+state 24
+
+    (18) lista_ids -> ID . coma_ids
+    (20) coma_ids -> . COMMA ID coma_ids
+    (21) coma_ids -> . empty
+    (27) empty -> .
+
+    COMMA           shift and go to state 43
+    RPAREN          reduce using rule 27 (empty -> .)
+
+    coma_ids                       shift and go to state 42
+    empty                          shift and go to state 44
+
+state 25
+
+    (26) stmt_simple -> ID LPAREN lista_ids . RPAREN SEMI
+
+    RPAREN          shift and go to state 45
+
+
+state 26
+
+    (19) lista_ids -> empty .
+
+    RPAREN          reduce using rule 19 (lista_ids -> empty .)
+
+
+state 27
+
+    (17) decl_funcion -> FUNCION ID LPAREN . lista_ids RPAREN LBRACE declaraciones RBRACE
+    (18) lista_ids -> . ID coma_ids
+    (19) lista_ids -> . empty
+    (27) empty -> .
+
+    ID              shift and go to state 24
+    RPAREN          reduce using rule 27 (empty -> .)
+
+    lista_ids                      shift and go to state 46
+    empty                          shift and go to state 26
+
+state 28
+
+    (22) stmt_simple -> ENCENDER ID SEMI .
+
+    COMPONENTE      reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    FUNCION         reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    ENCENDER        reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    APAGAR          reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    LEER            reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    GIRAR           reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    ID              reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    $end            reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+    RBRACE          reduce using rule 22 (stmt_simple -> ENCENDER ID SEMI .)
+
+
+state 29
+
+    (23) stmt_simple -> APAGAR ID SEMI .
+
+    COMPONENTE      reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    FUNCION         reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    ENCENDER        reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    APAGAR          reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    LEER            reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    GIRAR           reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    ID              reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    $end            reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+    RBRACE          reduce using rule 23 (stmt_simple -> APAGAR ID SEMI .)
+
+
+state 30
+
+    (24) stmt_simple -> LEER ID SEMI .
+
+    COMPONENTE      reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    FUNCION         reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    ENCENDER        reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    APAGAR          reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    LEER            reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    GIRAR           reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    ID              reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    $end            reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+    RBRACE          reduce using rule 24 (stmt_simple -> LEER ID SEMI .)
+
+
+state 31
+
+    (25) stmt_simple -> GIRAR ID ID . SEMI
+
+    SEMI            shift and go to state 47
+
+
+state 32
+
+    (7) tipo -> ID .
+
+    SEMI            reduce using rule 7 (tipo -> ID .)
+
+
+state 33
+
+    (16) decl_componente -> COMPONENTE ID ASSIGN tipo . SEMI
+
+    SEMI            shift and go to state 48
+
+
+state 34
+
+    (8) tipo -> LED .
+
+    SEMI            reduce using rule 8 (tipo -> LED .)
+
+
+state 35
+
+    (9) tipo -> SENSOR .
+
+    SEMI            reduce using rule 9 (tipo -> SENSOR .)
+
+
+state 36
+
+    (10) tipo -> TERMOMETRO .
+
+    SEMI            reduce using rule 10 (tipo -> TERMOMETRO .)
+
+
+state 37
+
+    (11) tipo -> SERVOMOTOR .
+
+    SEMI            reduce using rule 11 (tipo -> SERVOMOTOR .)
+
+
+state 38
+
+    (12) tipo -> VENTILADOR .
+
+    SEMI            reduce using rule 12 (tipo -> VENTILADOR .)
+
+
+state 39
+
+    (13) tipo -> MICROPROCESADOR .
+
+    SEMI            reduce using rule 13 (tipo -> MICROPROCESADOR .)
+
+
+state 40
+
+    (14) tipo -> DISPLAY .
+
+    SEMI            reduce using rule 14 (tipo -> DISPLAY .)
+
+
+state 41
+
+    (15) tipo -> BOTON .
+
+    SEMI            reduce using rule 15 (tipo -> BOTON .)
+
+
+state 42
+
+    (18) lista_ids -> ID coma_ids .
+
+    RPAREN          reduce using rule 18 (lista_ids -> ID coma_ids .)
+
+
+state 43
+
+    (20) coma_ids -> COMMA . ID coma_ids
+
+    ID              shift and go to state 49
+
+
+state 44
+
+    (21) coma_ids -> empty .
+
+    RPAREN          reduce using rule 21 (coma_ids -> empty .)
+
+
+state 45
+
+    (26) stmt_simple -> ID LPAREN lista_ids RPAREN . SEMI
+
+    SEMI            shift and go to state 50
+
+
+state 46
+
+    (17) decl_funcion -> FUNCION ID LPAREN lista_ids . RPAREN LBRACE declaraciones RBRACE
+
+    RPAREN          shift and go to state 51
+
+
+state 47
+
+    (25) stmt_simple -> GIRAR ID ID SEMI .
+
+    COMPONENTE      reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    FUNCION         reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    ENCENDER        reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    APAGAR          reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    LEER            reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    GIRAR           reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    ID              reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    $end            reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+    RBRACE          reduce using rule 25 (stmt_simple -> GIRAR ID ID SEMI .)
+
+
+state 48
+
+    (16) decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .
+
+    COMPONENTE      reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    FUNCION         reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    ENCENDER        reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    APAGAR          reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    LEER            reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    GIRAR           reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    ID              reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    $end            reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+    RBRACE          reduce using rule 16 (decl_componente -> COMPONENTE ID ASSIGN tipo SEMI .)
+
+
+state 49
+
+    (20) coma_ids -> COMMA ID . coma_ids
+    (20) coma_ids -> . COMMA ID coma_ids
+    (21) coma_ids -> . empty
+    (27) empty -> .
+
+    COMMA           shift and go to state 43
+    RPAREN          reduce using rule 27 (empty -> .)
+
+    coma_ids                       shift and go to state 52
+    empty                          shift and go to state 44
+
+state 50
+
+    (26) stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .
+
+    COMPONENTE      reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    FUNCION         reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    ENCENDER        reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    APAGAR          reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    LEER            reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    GIRAR           reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    ID              reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    $end            reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+    RBRACE          reduce using rule 26 (stmt_simple -> ID LPAREN lista_ids RPAREN SEMI .)
+
+
+state 51
+
+    (17) decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN . LBRACE declaraciones RBRACE
+
+    LBRACE          shift and go to state 53
+
+
+state 52
+
+    (20) coma_ids -> COMMA ID coma_ids .
+
+    RPAREN          reduce using rule 20 (coma_ids -> COMMA ID coma_ids .)
+
+
+state 53
+
+    (17) decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE . declaraciones RBRACE
+    (2) declaraciones -> . declaracion declaraciones
+    (3) declaraciones -> . empty
+    (4) declaracion -> . decl_componente
+    (5) declaracion -> . decl_funcion
+    (6) declaracion -> . stmt_simple
+    (27) empty -> .
+    (16) decl_componente -> . COMPONENTE ID ASSIGN tipo SEMI
+    (17) decl_funcion -> . FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE
+    (22) stmt_simple -> . ENCENDER ID SEMI
+    (23) stmt_simple -> . APAGAR ID SEMI
+    (24) stmt_simple -> . LEER ID SEMI
+    (25) stmt_simple -> . GIRAR ID ID SEMI
+    (26) stmt_simple -> . ID LPAREN lista_ids RPAREN SEMI
+
+    RBRACE          reduce using rule 27 (empty -> .)
+    COMPONENTE      shift and go to state 8
+    FUNCION         shift and go to state 10
+    ENCENDER        shift and go to state 11
+    APAGAR          shift and go to state 12
+    LEER            shift and go to state 13
+    GIRAR           shift and go to state 14
+    ID              shift and go to state 9
+
+    declaraciones                  shift and go to state 54
+    declaracion                    shift and go to state 3
+    empty                          shift and go to state 4
+    decl_componente                shift and go to state 5
+    decl_funcion                   shift and go to state 6
+    stmt_simple                    shift and go to state 7
+
+state 54
+
+    (17) decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones . RBRACE
+
+    RBRACE          shift and go to state 55
+
+
+state 55
+
+    (17) decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .
+
+    COMPONENTE      reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    FUNCION         reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    ENCENDER        reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    APAGAR          reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    LEER            reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    GIRAR           reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    ID              reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    $end            reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+    RBRACE          reduce using rule 17 (decl_funcion -> FUNCION ID LPAREN lista_ids RPAREN LBRACE declaraciones RBRACE .)
+
